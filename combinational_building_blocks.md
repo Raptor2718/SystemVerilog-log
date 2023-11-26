@@ -1,8 +1,11 @@
 4.3 Write SystemVerilog models ofa3to8decoder using (a) Boolean operators,
 (b) a conditional operator, and (c) a shift operator. Write a testbench to
 compare the three versions. 
+<br>
+<br>
 
 ### Boolean operators
+
 ```SystemVerilog 
 module bool3to8 (output logic [7:0] x, input logic [2:0] y);
 
@@ -53,7 +56,10 @@ endmodule
 
       
 <br> 
+<br>
 4.4 Write a SystemVerilog model of a 2n to n priority encoder. 
+<br>
+<br>
 
 ```SystemVerilog
 module priority_encoder #(parameter N = 4)(output logic [$clog2(N)-1:0] y, logic valid, input logic [N-1: 0] x);
@@ -72,11 +78,15 @@ end
 end
 Endmodule
 ```
-**testbench**
+### testbench
 <img width="1352" alt="image" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/e9433706-e9b5-4424-8298-eeffea98cab9">  
 
-<br>  
+<br> 
+<br>
 4.5 Write a model of an n-input multiplexer. Write a suitable testbench. 
+<br>
+<br>
+
 
 ```SystemVerilog
 module muxN #(parameter N = 4) (output logic y, input logic [N-1:0] x, logic [$clog2(N)-1:0] select);
@@ -92,11 +102,15 @@ endmodule
 <img width="1354" alt="image" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/7fb153ac-af5f-4822-a1bc-33cfc5849ce9">
 
 <br>
+<br>
 4.6 A comparator is used to to determine whether two signals have equal values.
 A one-bit comparator is described by
 eqo = ˜(x ˆ y) & eqi;
 where eqi is the result of the comparison of other bits and eqo is passed to the
 next comparison operation. Write a model of an n-bit iterative comparator.
+<br>
+<br>
+
 
 ```SystemVerilog
 
