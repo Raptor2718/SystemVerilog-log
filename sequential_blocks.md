@@ -47,3 +47,62 @@ endmodule
 
 
 <img width="1235" alt="image" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/6caa8d35-50bf-4531-b045-fea9ac4ab26b">
+
+```Systemverilog
+module ncounter #(parameter N = 3) (output logic [N-1:0] count, input logic clk, up, reset);
+
+always_ff @(posedge clk, posedge reset) begin
+
+if 	(reset)	count <= 0;
+else if	(up  && count < ('b1<< N)-1)	count <= count + 1; 
+else if (~up && count > 'b0 )		count <= count - 1;
+
+end
+endmodule
+```
+
+<img width="1349" alt="image" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/a930606f-caf4-488e-825b-09457767ddb3">
+
+```systemverilog
+module npiso #(parameter N = 3) (output logic [N-1:0] q, input logic clk, pl, [N-1:0] p);
+
+always_ff @(posedge clk) begin
+if (pl) q <= p;
+else q = q << 1;
+end
+
+endmodule
+```
+
+<img width="1005" alt="image" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/17c05daa-2506-4afc-ba73-11c677a91d82">
+
+```systemverilog
+module johnsoncounter #(parameter N = 4) (output logic [N-1:0] count, input logic clk, reset);
+
+always_ff @(posedge clk, posedge reset) 
+if (reset)
+	count <= 0;
+else
+	count <= {count[N-2:0], ~count[N-1]};
+
+endmodule
+```
+```systemverilog
+module johnsoncounter #(parameter N = 4) (output logic [N-1:0] count, input logic clk, reset);
+
+always_ff @(posedge clk, posedge reset) 
+if (reset)
+	count <= 0;
+else
+	if (~count[N-1] && ~count[0])
+		count <= {{(N-1){1'b0}}, 1'b1};
+	else
+		count <= {count[N-2:0], ~count[N-1]};
+
+endmodule
+
+```
+
+<img width="1109" alt="image" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/305d3293-ecd0-4425-8e57-5978600c2e2c">
+
+
