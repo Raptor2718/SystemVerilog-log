@@ -1,11 +1,9 @@
-waveforms of testbench (+ state of the parity checker):
-
+Waveforms of testbench (+ state of the parity checker):
+<br />
 	
 <img width="1299" alt="Screenshot 2023-12-16 at 23 59 41" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/9eac5b4a-1aca-44eb-aacb-378f9a994188">
 
-<br>
-spc4.sv:
-<br>
+## parity checker:
 
 ```systemverilog
 
@@ -46,3 +44,50 @@ end
 
 endmodule
 ```
+
+## testbench:
+
+```systemverilog
+module spc4_tb; 
+
+logic error;
+logic b, clk, reset;
+logic [3:0] b_array = 4'b0; 		
+
+spc4 parity_checker (.*);
+
+initial
+begin
+clk = '0;
+reset = 0;
+#5ps reset = 1;
+for (b_array = 0; b_array < 16; b_array++) 
+begin
+for (int i = 0; i < 4; i++) 
+	begin
+	wait (clk == 0) b = b_array[i];
+	wait (clk == 1);
+	end
+end
+end
+always #50ps clk = !clk;
+
+endmodule
+```
+# An interesting issue I came across...
+
+* The output ```error``` wasn't synchronous. So according to the output evaluation combinational logic;
+```systemverilog
+always_comb
+begin: out
+	error = 0;
+	case (state)
+	e3: error = b;
+	o3: error = !b;
+	endcase
+end
+```
+An error might appear regardless of the 4th bit as soon as the 3rd state is entered. The combinational logic will consider the current bit (3rd bit) and the 3rd state entered (```e3``` or ```o3```) as inputs and evaluate ```error```. This is wrong because the 4th bit (parity bit) hasn't even been considered!  
+The parity bit is to occur somewhere in the third clock cycle (after entering the third state and before the next rising edge). So storing the ```error``` evaluated via the combinational logic, and asserting it only at the 4th rising edge (so when the state changes to ```start```), allows time for the parity bit to occur and be considered in evaluating ```error```. And this fixed the issue.
+
+    
