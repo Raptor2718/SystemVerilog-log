@@ -1,7 +1,3 @@
-Waveforms of testbench (+ state of the parity checker):
-<br />
-	
-<img width="1299" alt="Screenshot 2023-12-16 at 23 59 41" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/9eac5b4a-1aca-44eb-aacb-378f9a994188">
 
 ## parity checker:
 
@@ -74,6 +70,12 @@ always #50ps clk = !clk;
 
 endmodule
 ```
+
+### Waveforms of testbench (+ state of the parity checker):
+
+	
+<img width="1299" alt="Screenshot 2023-12-16 at 23 59 41" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/9eac5b4a-1aca-44eb-aacb-378f9a994188">
+
 # An interesting issue I came across...
 
 * The output ```error``` wasn't synchronous. So according to the output evaluation combinational logic;
@@ -89,5 +91,9 @@ end
 ```
 An error might appear regardless of the 4th bit as soon as the 3rd state is entered. The combinational logic will consider the current bit (3rd bit) and the 3rd state entered (```e3``` or ```o3```) as inputs and evaluate ```error```. This is wrong because the 4th bit (parity bit) hasn't even been considered!  
 The parity bit is to occur somewhere in the third clock cycle (after entering the third state and before the next rising edge). So storing the ```error``` evaluated via the combinational logic, and asserting it only at the 4th rising edge (so when the state changes to ```start```), allows time for the parity bit to occur and be considered in evaluating ```error```. And this fixed the issue.
+
+## My working for the design
+
+![IMG_2834](https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/c0eddd25-83d4-4e82-8c6b-56be70eab5b6)
 
     
