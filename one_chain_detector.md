@@ -95,4 +95,26 @@ always_ff @(posedge clk, negedge reset)
 endmodule
 ```
 
+## description of hardware
+
+```systemverilog
+module descriptive_tripple_1_det (output logic x, input logic b, clk, reset);
+
+logic s1_b, s1_b_s0, s0, s1;
+
+and and0 (s1_b, s1, b);
+and and1 (s1_b_s0, s1_b, s0);
+
+dff dff0 (s0, s1_b, clk, reset);
+dff dff1 (s1, b, clk, reset);
+dff dffx (x, s1_b_s0, clk, reset);
+
+endmodule
+```
+
+And as expected, this works the same:
+
+<img width="1223" alt="image" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/8995f113-d2bb-4e40-873c-d30d917a6b42">
+
+
 
