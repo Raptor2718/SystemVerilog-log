@@ -37,7 +37,7 @@ Here, the sequence, '0110' is sent between 160ps and 240ps with each bit lasting
 <img width="1231" alt="image" src="https://github.com/Raptor2718/SystemVerilog-log/assets/106425621/e6f11644-0217-47e2-a27c-6462ce072e70">
 
   
-the 4th bit would occur during the 4th cycle (so before the proceeding transition) So, as in the case of the 1 chain detector, I made the ```error``` synchronous and be asserted in the transition proceeding the cycle in which the system is in the state linked to the Mealy output.
+the 4th bit would occur during the 4th cycle (so before the proceeding transition) So, as in the case of the [one chain detector](https://github.com/Raptor2718/SystemVerilog-log/blob/main/one_chain_detector.md), I made the ```error``` synchronous and be asserted in the transition proceeding the cycle in which the system is in the state linked to the Mealy output.
 
 ```SystemVerilog
 module evenParityChecker4 (output logic error, input logic clk, rst, inp);
