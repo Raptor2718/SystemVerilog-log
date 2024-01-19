@@ -65,7 +65,7 @@ endmodule
 ## discussions
 
 'X' is a synchronous output and temp_x stores the value that should be asserted to x in the next rising edge of the clock. (Just like the error output in the [parity checker](https://github.com/Raptor2718/SystemVerilog-log/blob/main/parity_checker.md).
-But x_temp would take up another storage unit (a latch). Combining the output logic with the synchronisation behavioural block would save the need for x_temp. 
+But x_temp would take up another storage unit (a flip flop). Combining the output logic with the synchronisation behavioural block would save the need for x_temp. 
 The need for a synchronous output is expected because x is infact a Mealy output and is therefore linked to a state transition and not a state itself. (This explains the observations in the [parity checker](https://github.com/Raptor2718/SystemVerilog-log/blob/main/parity_checker.md) as well)
 
 ### revised state machine
